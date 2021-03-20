@@ -7,6 +7,8 @@ from order.models import Order
 class OrderSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
+        assert validated_data.get('cart')  # confirm that there is a cart in the fields and that the cart is not empty
+
         products_ordered_ids = validated_data['cart'].keys()
         products_ordered = list(Product.objects.filter(id__in=products_ordered_ids))
         assert len(products_ordered) == len(products_ordered_ids)  # confirm that all products ordered exists in the db
