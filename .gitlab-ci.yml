@@ -1,0 +1,24 @@
+image: python:3.7-buster
+
+cache:
+  paths:
+    - ~/.cache/pip/
+
+stages:
+  - tests
+  - deploy
+
+tests:
+  stage: tests
+  script:
+    - bash test.sh
+  only:
+    - master
+
+deploy-beta:
+  stage: deploy
+  script:
+    - git remote add beta https://heroku:$HEROKU_API_KEY@git.heroku.com/tokpa-api.git
+    - git push -f beta HEAD:master
+  only:
+    - master
