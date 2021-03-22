@@ -8,7 +8,7 @@ from xlib.enums import PaymentMethod
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    cart = JSONField(default=dict)  # [{product_id: quantity}, ...]
+    cart = JSONField(default=dict)  # {product_id_x: quantity_x, product_id_y: quantity_y, ...}
     amount = models.IntegerField()
 
     delivery_address_district = models.CharField(max_length=255)
